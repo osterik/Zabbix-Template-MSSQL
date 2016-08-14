@@ -1,25 +1,31 @@
 # Zabbix-Template-MSSQL
 
-Microsoft SQL Server 2012 monitoring. For English and Russian version. With LLD. —hecked in 2.4.8 and 3.0.0
+Microsoft SQL Server 2012 monitoring. For English and Russian version. With LLD. –°hecked in 2.4.8 and 3.0.0
 Based on Anton Golubkin's "Template MS SQL 2012" at 
 https://share.zabbix.com/databases/microsoft-sql-server/template-ms-sql-2012
 
 
 # Changelog
-* ƒÓ·‡‚ÎÂÌ‡ ‚ÓÁÏÓÊÌÓÒÚ¸ ÛÍ‡Á˚‚‡Ú¸ ÒÔËÒÍÓ ·‡Á ‰‡ÌÌ˚ı, ÍÓÚÓ˚ı Ì‡‰Ó ÔÓÔÛÒÍ‡Ú¸ ÔË LLD, Ô‡‡ÏÂÚ $DB_to_skip ‚ SQLBaseName_To_Zabbix.ps1 
-* ƒÓ·‡‚ÎÂÌ {HOST.NAME} Í ËÏÂÌË ÚË„„ÂÓ‚ (ÍÓ„‰‡ ÔËıÓ‰ËÚ ÒÓÓ·˘ÂÌËÂ, ÔÓÌˇÚÌÓ, Í Í‡ÍÓÏÛ ËÁ ÒÂ‚ÂÓ‚ ÓÌÓ ÓÚÌÓÒËÚÒˇ)
-* ƒÓ·‡‚ÎÂÌ ÍÓÏÔÎÂÍÒÌ˚È ˝Í‡Ì ÔÓ ÏÓÚË‚‡Ï "Top 10 SQL Server Counters for Monitoring SQL Server Performance" (http://www.databasejournal.com/features/mssql/article.php/3932406/Top-10-SQL-Server-Counters-for-Monitoring-SQL-Server-Performance.htm)
-* ÿ‡·ÎÓÌ ‰Îˇ ÛÒÒÍÓ„Ó MSSQL.
-* “Ë„„Â "Access Methods Page Splits / Sec" 
-    {MS SQL 2012:perf_counter["\SQLServer:Access Methods\Page Splits/sec",30].last()}>
-    {MS SQL 2012:perf_counter["\SQLServer:SQL Statistics\Batch Requests/sec",30].last()}/20
-Õ‡ÒÍÓÎ¸ÍÓ ˇ ÏÓ„Û ‰Ó„‡‰‡Ú¸Òˇ, Anton Golubkin ÓËÂÌÚËÓ‚‡ÎÒˇ Ì‡ Ù‡ÁÛ "Ideally this counter should be less than 20% of the batch requests per second." ÕÓ ÔÓÎÛ˜ËÎÓÒ¸, ˜ÚÓ ÚË„„Â Ò‡·‡Ú˚‚‡ÂÚ, ÍÓ„‰‡ PageSplits > 5% Batch Requests. ◊ÚÓ ÒÎÛ˜‡ÂÚÒˇ Ì‡ÏÌÓ„Ó ˜‡˘Â :) œÓÏÂÌˇÎ Ì‡ 20% (Ú.Â. "/5")
-#  ‡Í Ò‰ÂÎ‡Ú¸ ¯‡·ÎÓÌ ‰Îˇ Express Â‰‡ÍˆËË (ËÎË ‰Îˇ ÒÎÛ˜‡ˇ, ÍÓ„‰‡ ‚ ÒËÒÚÂÏÂ ÛÒÚ‡ÌÓ‚ÎÂÌÓ ÌÂÒÍÓÎ¸ÍÓ ˝ÍÁÂÏÔÎˇÓ‚ MSSQL)
-  1. ƒÓ·‡‚ËÚ¸ ¯‡·ÎÓÌ ÓÚ Ó·˚˜ÌÓÈ ‚ÂÒËË ‚ Zabbix
-  2. œÂÂËÏÂÌÓ‚‡Ú¸ ËÎË ÒÍÎÓÌËÓ‚‡Ú¸ ¯‡·ÎÓÌ (Ì‡ÔËÏÂ, ‰Ó·‡‚Ë‚ " Express" Í Ì‡Á‚‡ÌË˛)
-  3. ›ÍÒÔÓÚÓ‚‡Ú¸ ÚÓÎ¸ÍÓ ˜ÚÓ ÒÓÁ‰‡ÌÌ˚È ¯‡·ÎÓÌ "ıııı Express" Ë Û‰‡ÎËÚ¸ Â„Ó
-  4. ŒÚÍ˚Ú¸ ˝ÍÒÔÓÚËÓ‚‡ÌÌ˚È .xls ‚ ÚÂÍÒÚÓ‚ÓÏ Â‰‡ÍÚÓÂ Ë Á‡ÏÂÌËÚ¸ ‚ÒÂ ‚ıÓÊ‰ÂÌËˇ "SQLServer:" Ì‡ "MSSQL$SQLEXPRESS:". ≈ÒÎË ÒÓÁ‰‡∏ÚÒˇ ¯‡·ÎÓÌ ‰Îˇ ˝ÍÁÂÏÔÎˇ‡ MSSQL Ò ÌÂÒÚ‡Ì‰‡Ì˚Ï ËÏÂÌÂÏ - ÛÍ‡Á‡Ú¸ ˝ÚÓ ËÏˇ. œÓÒÏÓÚÂÚ¸ Â„Ó ÏÓÊÌÓ ÔË ‰Ó·‡‚ÎÂÌËË Ò˜∏Ú˜ËÍÓ‚ ‚ perfmon.exe
-  5. —Óı‡ÌËÚ¸ Ë ËÏÔÓÚËÓ‚‡Ú¸ ËÁÏÂÌ∏ÌÌ˚È ¯‡·ÎÓÌ. œË ËÏÔÓÚÂ ÒÌˇÚ¸ ÓÚÏÂÚÍË ËÁ ÍÓÎÓÌÍË "Œ·ÌÓ‚ËÚ¸ ÒÛ˘ÂÒÚ‚Û˛˘ÂÂ"
+* –î–æ–±–∞–≤–ª–µ–Ω–∞ –≤–æ–∑–º–æ–∂–Ω–æ—Å—Ç—å —É–∫–∞–∑—ã–≤–∞—Ç—å —Å–ø–∏—Å–∫–æ –±–∞–∑ –¥–∞–Ω–Ω—ã—Ö, –∫–æ—Ç–æ—Ä—ã—Ö –Ω–∞–¥–æ –ø—Ä–æ–ø—É—Å–∫–∞—Ç—å –ø—Ä–∏ LLD, –ø–∞—Ä–∞–º–µ—Ç—Ä $DB_to_skip –≤ SQLBaseName_To_Zabbix.ps1 
+* –î–æ–±–∞–≤–ª–µ–Ω {HOST.NAME} –∫ –∏–º–µ–Ω–∏ —Ç—Ä–∏–≥–≥–µ—Ä–æ–≤ (–∫–æ–≥–¥–∞ –ø—Ä–∏—Ö–æ–¥–∏—Ç —Å–æ–æ–±—â–µ–Ω–∏–µ, –ø–æ–Ω—è—Ç–Ω–æ, –∫ –∫–∞–∫–æ–º—É –∏–∑ —Å–µ—Ä–≤–µ—Ä–æ–≤ –æ–Ω–æ –æ—Ç–Ω–æ—Å–∏—Ç—Å—è)
+* –î–æ–±–∞–≤–ª–µ–Ω –∫–æ–º–ø–ª–µ–∫—Å–Ω—ã–π —ç–∫—Ä–∞–Ω –ø–æ –º–æ—Ç–∏–≤–∞–º "Top 10 SQL Server Counters for Monitoring SQL Server Performance" (http://www.databasejournal.com/features/mssql/article.php/3932406/Top-10-SQL-Server-Counters-for-Monitoring-SQL-Server-Performance.htm)
+* –®–∞–±–ª–æ–Ω –¥–ª—è —Ä—É—Å—Å–∫–æ–≥–æ MSSQL.
+* –ò—Å–ø—Ä–∞–≤–ª–µ–Ω —Ç—Ä–∏–≥–≥–µ—Ä "Access Methods Page Splits / Sec" 
+
+> {MS SQL 2012:perf_counter["\SQLServer:Access Methods\Page Splits/sec",30].last()}>
+> {MS SQL 2012:perf_counter["\SQLServer:SQL Statistics\Batch Requests/sec",30].last()}/20
+
+–ù–∞—Å–∫–æ–ª—å–∫–æ —è –º–æ–≥—É –¥–æ–≥–∞–¥–∞—Ç—å—Å—è, Anton Golubkin –æ—Ä–∏–µ–Ω—Ç–∏—Ä–æ–≤–∞–ª—Å—è –Ω–∞ —Ñ—Ä–∞–∑—É "Ideally this counter should be less than 20% of the batch requests per second." –ù–æ –ø–æ–ª—É—á–∏–ª–æ—Å—å, —á—Ç–æ —Ç—Ä–∏–≥–≥–µ—Ä —Å—Ä–∞–±–∞—Ç—ã–≤–∞–µ—Ç, –∫–æ–≥–¥–∞ PageSplits > 5% Batch Requests. –ß—Ç–æ —Å–ª—É—á–∞–µ—Ç—Å—è –Ω–∞–º–Ω–æ–≥–æ —á–∞—â–µ :) –ü–æ–º–µ–Ω—è–ª –Ω–∞ 20% (—Ç.–µ. "/5")
+
+# –ö–∞–∫ —Å–¥–µ–ª–∞—Ç—å —à–∞–±–ª–æ–Ω –¥–ª—è Express —Ä–µ–¥–∞–∫—Ü–∏–∏
+
+(–∏–ª–∏ –¥–ª—è —Å–ª—É—á–∞—è, –∫–æ–≥–¥–∞ –≤ —Å–∏—Å—Ç–µ–º–µ —É—Å—Ç–∞–Ω–æ–≤–ª–µ–Ω–æ –Ω–µ—Å–∫–æ–ª—å–∫–æ —ç–∫–∑–µ–º–ø–ª—è—Ä–æ–≤ MSSQL)
+
+1. –î–æ–±–∞–≤–∏—Ç—å —à–∞–±–ª–æ–Ω –æ—Ç –æ–±—ã—á–Ω–æ–π –≤–µ—Ä—Å–∏–∏ –≤ Zabbix
+2. –ü–µ—Ä–µ–∏–º–µ–Ω–æ–≤–∞—Ç—å –∏–ª–∏ —Å–∫–ª–æ–Ω–∏—Ä–æ–≤–∞—Ç—å —à–∞–±–ª–æ–Ω (–Ω–∞–ø—Ä–∏–º–µ—Ä, –¥–æ–±–∞–≤–∏–≤ " Express" –∫ –Ω–∞–∑–≤–∞–Ω–∏—é)
+3. –≠–∫—Å–ø–æ—Ä—Ç—Ä–æ–≤–∞—Ç—å —Ç–æ–ª—å–∫–æ —á—Ç–æ —Å–æ–∑–¥–∞–Ω–Ω—ã–π —à–∞–±–ª–æ–Ω "—Ö—Ö—Ö—Ö Express" –∏ —É–¥–∞–ª–∏—Ç—å –µ–≥–æ
+4. –û—Ç–∫—Ä—ã—Ç—å —ç–∫—Å–ø–æ—Ä—Ç–∏—Ä–æ–≤–∞–Ω–Ω—ã–π .xms –≤ —Ç–µ–∫—Å—Ç–æ–≤–æ–º —Ä–µ–¥–∞–∫—Ç–æ—Ä–µ –∏ –∑–∞–º–µ–Ω–∏—Ç—å –≤—Å–µ –≤—Ö–æ–∂–¥–µ–Ω–∏—è "SQLServer:" –Ω–∞ "MSSQL$SQLEXPRESS:". –ï—Å–ª–∏ —Å–æ–∑–¥–∞—ë—Ç—Å—è —à–∞–±–ª–æ–Ω –¥–ª—è —ç–∫–∑–µ–º–ø–ª—è—Ä–∞ MSSQL —Å –Ω–µ—Å—Ç–∞–Ω–¥–∞—Ä–Ω—ã–º –∏–º–µ–Ω–µ–º - —É–∫–∞–∑–∞—Ç—å —ç—Ç–æ –∏–º—è. –ü–æ—Å–º–æ—Ç—Ä–µ—Ç—å –µ–≥–æ –º–æ–∂–Ω–æ –ø—Ä–∏ –¥–æ–±–∞–≤–ª–µ–Ω–∏–∏ —Å—á—ë—Ç—á–∏–∫–æ–≤ –≤ perfmon.exe
+5. –°–æ—Ö—Ä–∞–Ω–∏—Ç—å –∏ –∏–º–ø–æ—Ä—Ç–∏—Ä–æ–≤–∞—Ç—å –∏–∑–º–µ–Ω—ë–Ω–Ω—ã–π —à–∞–±–ª–æ–Ω. –ü—Ä–∏ –∏–º–ø–æ—Ä—Ç–µ —Å–Ω—è—Ç—å –æ—Ç–º–µ—Ç–∫–∏ –∏–∑ –∫–æ–ª–æ–Ω–∫–∏ "–û–±–Ω–æ–≤–∏—Ç—å —Å—É—â–µ—Å—Ç–≤—É—é—â–µ–µ"
 
 
 # English
